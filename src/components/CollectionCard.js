@@ -3,7 +3,7 @@ import { ArrowRightIcon } from '@chakra-ui/icons';
 
 // import TaskList from './TaskList';
 
-function CollectionCard({ title, tasks, colors, id }) {
+function CollectionCard({ title, tasks, colors, id, list }) {
 
     const color = useColorModeValue('gray.700');
 
@@ -13,7 +13,7 @@ function CollectionCard({ title, tasks, colors, id }) {
                 <Box w="7px" h="70px" mr="5" ml="-3" bgColor={`${colors}.500`} ></Box>
                 <Box w="100%" >
                     <Heading size="lg" mb="3" fontWeight="semibold" color={color}>{ title }</Heading>
-                    <Text color="gray.500">{ tasks } Tasks</Text>
+                    <Text color="gray.500">{ list.length } Tasks</Text>
                 </Box>
                 <IconButton icon={ <ArrowRightIcon /> } />
 
