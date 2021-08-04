@@ -21,7 +21,6 @@ function Dashboard({ collections }) {
                         )
                     })
                 }
-                {/* <Button px="10" py="8" borderRadius="10" border="2px gray.200" size="lg" >Add Collection <AddIcon ml="2" /></Button> */}
                 <AddCollection />
             </Grid>
         </Box>
