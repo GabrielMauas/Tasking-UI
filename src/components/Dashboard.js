@@ -1,7 +1,7 @@
-import { Box, Button, Grid, Heading } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import { Box, Grid, Heading } from '@chakra-ui/react';
 
 import CollectionCard from './CollectionCard';
+import AddCollection from './AddCollection';
 
 function Dashboard({ collections }) {
 
@@ -17,11 +17,12 @@ function Dashboard({ collections }) {
                     collections.map( c => {
 
                         return(
-                            <CollectionCard key={c.id} title={c.title} tasks={c.tasks} colors={c.color} id={c.id} />
+                            <CollectionCard key={c.id} title={c.title} tasks={c.tasks} colors={c.color} id={c.id} list={c.list} />
                         )
                     })
                 }
-                <Button px="10" py="8" borderRadius="10" border="2px gray.200" size="lg" >Add Collection <AddIcon ml="2" /></Button>
+                {/* <Button px="10" py="8" borderRadius="10" border="2px gray.200" size="lg" >Add Collection <AddIcon ml="2" /></Button> */}
+                <AddCollection />
             </Grid>
         </Box>
     )
