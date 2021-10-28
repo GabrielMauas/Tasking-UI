@@ -8,13 +8,13 @@ import {
   } from "@chakra-ui/react";
   import { FaEllipsisH } from 'react-icons/fa';
 
-function OptionsMenu({ color }) {
+function OptionsMenu() {
 
     const fontColor = useColorModeValue('gray.800', 'gray.200');
 
     return(
         <Menu>
-            <MenuButton as={IconButton} icon={ <FaEllipsisH /> }  bgColor="transparent" _focus={{border: 'none'}} _hover={{bgColor: `${color}.300`}} _active={{bgColor: `${color}.500`}} borderRadius="20" >
+            <MenuButton as={IconButton} icon={ <FaEllipsisH /> } bgColor="transparent" colorScheme="gray" border="2px gray.200" >
             </MenuButton>
             <MenuList color={fontColor}>
                 <MenuItem>Edit</MenuItem>

@@ -1,0 +1,7 @@
+{
+    "name": "Tasking",
+    "short_name": "Tasking",
+    "dir": "ltr",
+    "display": "fullscreen",
+    "start_url": "/collections"
+}

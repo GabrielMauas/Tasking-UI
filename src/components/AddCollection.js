@@ -1,73 +1,99 @@
 import {
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    ModalContent,
+    ModalCloseButton,
     useDisclosure,
     Button,
-    Stack, FormLabel, Input, Box, Select
+    IconButton,
+    Stack, FormLabel, Input, Box, useToast
   } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons';
 import React, { useRef } from 'react';
 
+import { foldersRef } from '../firebase/firebaseConfig';
+import { addDoc, serverTimestamp } from 'firebase/firestore';
+import { useAuth } from '../contexts/AuthContext';
+
 
 function AddCollection() {
-
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const firstField = useRef();
+    const nameRef = useRef();
+    const { currentUser } = useAuth();
+    const toast = useToast();
+
+    const createFolder = async () => {
+        const data = {
+            name: nameRef.current.value,
+            ownerId: currentUser.uid,
+            createdAt: serverTimestamp(),
+        }
+        await addDoc(foldersRef, data);
+        toast({
+            title: 'Collection Created',
+            status: 'success',
+            duration: 2000,
+            isClosable: true
+        });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        createFolder();
+    }
     
     return (
         <>
-            <Button rightIcon={ <AddIcon /> } colorScheme="gray" onClick={onOpen} px="10" py="8" borderRadius="10" border="2px gray.200" size="lg" >Add Collection</Button>
-            <Drawer
+            <IconButton 
+                icon={ <AddIcon /> } 
+                colorScheme="gray" 
+                onClick={onOpen}  
+                borderRadius="10" 
+                border="2px gray.200" 
+                size="lg" 
+            >
+            </IconButton>
+            <Modal
+                initialFocusRef={nameRef}
                 isOpen={isOpen}
                 placement="right"
-                initialFocusRef={firstField}
                 onClose={onClose}
-                size="lg"
+                size="sm"
             >
-                <DrawerOverlay />
-                <DrawerContent>
-                <DrawerCloseButton />
-                <DrawerHeader borderBottomWidth="1px">
-                    Create a New Collection
-                </DrawerHeader>
-        
-                <DrawerBody>
-                    <Stack spacing="24px">
-                        <Box>
-                            <FormLabel htmlFor="task">Name</FormLabel>
-                            <Input
-                            ref={firstField}
-                            id="task"
-                            placeholder="New Task..."
-                            />
-                        </Box>
+                <ModalOverlay />
+                <ModalContent onSubmit={handleSubmit}>
+                    <ModalCloseButton />
+                    <ModalHeader>
+                        Create a New Collection
+                    </ModalHeader>
             
-                        <Box>
-                            <FormLabel htmlFor="priority">Priority</FormLabel>
-                            <Select id="priority" defaultValue="None">
-                                <option value="None">None</option>
-                                <option value="Low">Low</option>
-                                <option value="Medium">Medium</option>
-                                <option value="High">High</option>
-                            </Select>
-                        </Box>
-        
-                    </Stack>
-                </DrawerBody>
-        
-                <DrawerFooter borderTopWidth="1px">
-                    <Button variant="ghost" mr={3} onClick={onClose}>
-                    Cancel
-                    </Button>
-                    <Button colorScheme="blue">Create</Button>
-                </DrawerFooter>
-                </DrawerContent>
-            </Drawer>
+                    <ModalBody py="5">
+                        <Stack spacing="24px">
+                            <Box as="form" id="my-form">
+                                <FormLabel htmlFor="task">Name</FormLabel>
+                                <Input
+                                    id="task"
+                                    required
+                                    ref={nameRef}
+                                    autoComplete={'off'}
+                                    placeholder="New Collection..."
+                                />
+                            </Box>
+                        </Stack>
+                    </ModalBody>
+            
+                    <ModalFooter>
+                        <Button variant="ghost" mr={3} onClick={onClose}>
+                            Cancel
+                        </Button>
+                        <Button type="submit" form="my-form" colorScheme="blue" onClick={onClose}>Create</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </>
     )
 }

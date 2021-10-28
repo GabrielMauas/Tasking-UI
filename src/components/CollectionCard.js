@@ -1,23 +1,23 @@
-import { Box, Button, Heading, Text, IconButton, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Heading, useColorModeValue } from '@chakra-ui/react';
 import { ArrowRightIcon } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom';
 
-// import TaskList from './TaskList';
-
-function CollectionCard({ title, tasks, colors, id, list }) {
+function CollectionCard({ folder }) {
 
     const color = useColorModeValue('gray.700');
 
      return(
-        <Button as="a" href={`/tasks/${id}`} borderRadius="10" px="10" py="5" textAlign="left" size="xl">
-
-                <Box w="7px" h="70px" mr="5" ml="-3" bgColor={`${colors}.500`} ></Box>
+        <Link to={`/${folder.id}`}>
+            <Button borderRadius="10" px="10" py="5" w="100%" textAlign="left" size="xl">
+                <Box w="7px" h="70px" mr="5" ml="-3" bgColor={`blue.500`} ></Box>
                 <Box w="100%" >
-                    <Heading size="lg" mb="3" fontWeight="semibold" color={color}>{ title }</Heading>
-                    <Text color="gray.500">{ list.length } Tasks</Text>
+                    <Heading size="lg" mb="3" fontWeight="semibold" color={color}>{ folder.name }</Heading>
                 </Box>
-                <IconButton icon={ <ArrowRightIcon /> } />
-
-        </Button>
+                {/* <IconButton icon={ <ArrowRightIcon /> } /> */}
+                <ArrowRightIcon />
+            </Button>
+        </Link>
+ 
      )
 }
 
