@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Grid, Heading, Flex } from '@chakra-ui/react';
+import { Box, Grid, Heading, Flex, Badge } from '@chakra-ui/react';
 
 import AddCollection from './AddCollection';
 import CollectionCard from './CollectionCard';
@@ -49,10 +49,19 @@ function Dashboard() {
                 loading
                 ? <Loading />
                 :
-                    <Grid templateColumns={["100%", "100%", "repeat(2, 1fr)"]} gap={15} my="10" mb="24" >   
-                        { folders.map( folder => <CollectionCard folder={folder} key={folder.id} />) }
+                    <Grid templateColumns={["100%", "100%", folders.length === 0 ? "100%" : "repeat(2, 1fr)"]} gap={15} my="10" mb="24" >   
+                        { 
+                        folders.length === 0 
+                        ?
+                            <Badge variant="subtle" w="90%" mx="auto" color="gray.500" placeItems="center" textAlign="center" my="5" py="3" fontSize="md" >
+                                Create a New Collection
+                            </Badge>
+                        :
+                            folders.map( folder => <CollectionCard folder={folder} key={folder.id} />) 
+                        }
                     </Grid>
             }
+
         </Box>
     )
 }

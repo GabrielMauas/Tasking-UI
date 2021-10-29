@@ -9,17 +9,35 @@ import {
     useDisclosure,
     Button,
     IconButton,
-    Stack, FormLabel, Input, Box, useToast
+    Stack, FormLabel, Input, Box, useToast, useRadioGroup, Grid
   } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { foldersRef } from '../firebase/firebaseConfig';
 import { addDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
+import RadioCard from './CustomRadioButton';
 
 
 function AddCollection() {
+
+	const options = [
+		"#FC76A1",
+		"#DBBE56",
+		"#E39264",
+		"#D25A61",
+		"#AE68E6",
+		"#70C4BF",
+		"#9E7F72"
+	];
+    const [collectionColor, setCollectionColor] = useState("#FC76A1");
+    const { getRootProps, getRadioProps } = useRadioGroup({
+		name: "collection-color",
+		defaultValue: "#FC76A1",
+		onChange: setCollectionColor
+	});
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     const nameRef = useRef();
     const { currentUser } = useAuth();
@@ -30,6 +48,7 @@ function AddCollection() {
             name: nameRef.current.value,
             ownerId: currentUser.uid,
             createdAt: serverTimestamp(),
+            collectionColor
         }
         await addDoc(foldersRef, data);
         toast({
@@ -50,7 +69,7 @@ function AddCollection() {
         <>
             <IconButton 
                 icon={ <AddIcon /> } 
-                colorScheme="gray" 
+                colorScheme="blue" 
                 onClick={onOpen}  
                 borderRadius="10" 
                 border="2px gray.200" 
@@ -82,6 +101,21 @@ function AddCollection() {
                                     autoComplete={'off'}
                                     placeholder="New Collection..."
                                 />
+                                <FormLabel my="5">Color</FormLabel>
+                                <Grid templateColumns="repeat(4, 1fr)" gap="3">
+									{options.map((value) => {
+										const radio = getRadioProps({ value });
+										return (
+											<RadioCard
+												color={value}
+												key={value}
+												{...radio}
+											>
+												{value}
+											</RadioCard>
+										);
+									})}
+								</Grid>
                             </Box>
                         </Stack>
                     </ModalBody>

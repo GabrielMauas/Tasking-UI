@@ -6,23 +6,25 @@ import {
     IconButton,
     useColorModeValue
   } from "@chakra-ui/react";
-import { FaEllipsisH } from 'react-icons/fa';
+import { FaEllipsisV } from 'react-icons/fa';
 
 
-function OptionsMenu({ deleteValue, task }) {
+function OptionsMenuCollection({ deleteValue }) {
 
     const fontColor = useColorModeValue('gray.800', 'gray.200');
 
+
+
     return(
         <Menu>
-            <MenuButton as={IconButton} icon={ <FaEllipsisH /> } bgColor="transparent" colorScheme="gray" border="2px gray.200" >
+            <MenuButton as={IconButton} icon={ <FaEllipsisV /> } bgColor="" colorScheme="gray" border="2px gray.200" >
             </MenuButton>
             <MenuList color={fontColor}>
                 <MenuItem>Edit</MenuItem>
-                <MenuItem onClick={() => deleteValue(task)}>Delete</MenuItem>
+                <MenuItem onClick={() => deleteValue()}>Delete</MenuItem>
             </MenuList>
         </Menu>
     )
 }
 
-export default OptionsMenu
+export default OptionsMenuCollection

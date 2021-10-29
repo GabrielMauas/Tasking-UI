@@ -3,7 +3,7 @@ import { FaCheckSquare, FaRegSquare } from 'react-icons/fa'
 
 import OptionsMenu from './OptionsMenu';
 
-function TaskItem({ task, toggleComplete }) {
+function TaskItem({ task, toggleComplete, deleteValue }) {
 
     return(
         <Button as="flex" flexDirection="row" justifyContent="space-between" alignItems="center"  cursor="default"  borderRadius="10"  >
@@ -17,7 +17,7 @@ function TaskItem({ task, toggleComplete }) {
                 />
                 <Text fontSize="lg"  ml="5" fontWeight="semibold" >{task.name}</Text>
             </Flex>
-            <OptionsMenu  />
+            <OptionsMenu deleteValue={deleteValue} task={task} />
             {/* <IconButton icon={ <FaEllipsisH /> }  bgColor="transparent" _focus={{border: 'none'}} _hover={{bgColor: `${prColor(item.priority)}.300`}} _active={{bgColor: `${prColor(item.priority)}.500`}} borderRadius="20" /> */}
         </Button>
     )

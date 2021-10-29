@@ -17,18 +17,17 @@ import React, { useRef } from 'react';
 import { db } from '../firebase/firebaseConfig';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-function EditTask({ id }) {
+function EditTask({ id, color }) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const taskRef = useRef();
-    const priorityRef = useRef();
-    // const { currentUser } = useAuth();
+    // const priorityRef = useRef();
     const toast = useToast();
 
     const createTask = async () => {
         const data = {
             name: taskRef.current.value,
-            priority: priorityRef.current.value,
+            // priority: priorityRef.current.value,
             parentId: id,
             createdAt: serverTimestamp(),
             completed: false
@@ -49,7 +48,7 @@ function EditTask({ id }) {
     }
         return (
           <>
-            <IconButton icon={ <AddIcon /> } colorScheme="gray" onClick={onOpen} />
+            <IconButton icon={ <AddIcon /> } bgColor={color} onClick={onOpen} />
             <Modal
               isOpen={isOpen}
               placement="bottom"
@@ -76,7 +75,7 @@ function EditTask({ id }) {
                       />
                     </Box>
       
-                    <Box>
+                    {/* <Box>
                       <FormLabel htmlFor="priority">Priority</FormLabel>
                       <Select id="priority" defaultValue="None" ref={priorityRef}>
                         <option value="None">None</option>
@@ -84,7 +83,7 @@ function EditTask({ id }) {
                         <option value="Medium">Medium</option>
                         <option value="High">High</option>
                       </Select>
-                    </Box>
+                    </Box> */}
       
                   </Stack>
                 </ModalBody>

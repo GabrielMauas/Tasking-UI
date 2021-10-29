@@ -1,14 +1,14 @@
-import { Box, IconButton, Stack, Heading, Flex, Text } from '@chakra-ui/react';
+import { Box, IconButton, Stack, Heading, Flex, Text, useToast } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig';
-import { query, onSnapshot, where, doc, getDoc, collection, updateDoc } from 'firebase/firestore';
+import { query, onSnapshot, where, doc, getDoc, collection, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 
 import TaskItem from './TaskItem';
 import AddTask from './AddTask';
 import Loading from './Loading';
-import OptionsMenu from './OptionsMenu';
+import OptionsMenuCollection from './OptionsMenuCollection';
 
 
 function TaskList() {
@@ -19,11 +19,15 @@ function TaskList() {
     const [completedTasks, setCompletedTasks] = useState([]);
     const [loading, setLoading] = useState(false);
     const [docName, setDocName] = useState('');
+    const [docColor, setDocColor] = useState('');
+    const toast = useToast();
+    const history = useHistory();
 
     const getColl = async () => {
         const docRef = doc(db, 'folders', id);
         const docData = await getDoc(docRef);
         setDocName(docData.data().name);
+        setDocColor(docData.data().collectionColor);
     }
 
     const getUncompletedTasks = async () => {
@@ -66,7 +70,30 @@ function TaskList() {
         await updateDoc(docRef, {
             completed: !task.completed
         })
+    }
 
+    const deleteTask = async (task) => {
+        const docRef = doc(db, 'tasks', task.id);
+        await deleteDoc(docRef);
+        toast({
+            title: "Task Deleted",
+            status: "error",
+            duration: 2000,
+            isClosable: true
+        })
+    }
+    const deleteFolder = async () => {
+        setLoading(true);
+        const folderRef = doc(db, 'folders', id);
+        await deleteDoc(folderRef);
+        toast({
+            title: "Collection Deleted",
+            status: "error",
+            duration: 2000,
+            isClosable: true
+        })
+        setLoading(false);
+        history.push('/');
     }
 
 
@@ -82,29 +109,32 @@ function TaskList() {
         <>
             {
             loading
-            ? <Loading />
+            ? 
+            <Box position="absolute" top={["5%", "5%", "15%"]} left={["5", "20", "25%"]} right={["5", "20", "25%"]} >
+                <Loading />
+            </Box>
             :       
             <Box position="absolute" top={["5%", "5%", "15%"]} left={["5", "20", "25%"]} right={["5", "20", "25%"]} >
                 <Flex align="center" justify="space-between" >
                     <Link to="/"> 
                         <IconButton icon={ <ArrowBackIcon /> } />
                     </Link>
-                    <Heading color={`blue.500`} size="xl" > { docName } </Heading>
+                    <Heading size="xl" color={docColor} > { docName } </Heading>
                     <Stack spacing={2} direction="row">
-                        <OptionsMenu />
-                        <AddTask id={id} />
+                        <OptionsMenuCollection deleteValue={deleteFolder} />
+                        <AddTask id={id} color={docColor} />
                     </Stack>
                 </Flex>
                 <Stack mt="24" p="5">
                 <Text fontSize="lg" fontWeight="bold" mb="5">Tasks - {uncompletedTasks.length}</Text>
                     {
-                        uncompletedTasks.map(task => <TaskItem key={task.id} toggleComplete={toggleComplete} task={task} /> )
+                        uncompletedTasks.map(task => <TaskItem key={task.id} toggleComplete={toggleComplete} task={task} deleteValue={deleteTask} /> )
                     }
                 </Stack>
                 <Stack mt="24" p="5">
                 <Text fontSize="lg" fontWeight="bold" mb="5">Completed - {completedTasks.length}</Text>
                     {
-                        completedTasks.map(task => <TaskItem key={task.id} toggleComplete={toggleComplete} task={task} /> )
+                        completedTasks.map(task => <TaskItem key={task.id} toggleComplete={toggleComplete} task={task} deleteValue={deleteTask} /> )
                     }
                 </Stack>
             </Box>
