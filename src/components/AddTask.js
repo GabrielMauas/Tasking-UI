@@ -9,7 +9,7 @@ import {
     useDisclosure,
     IconButton,
     Button,
-    Stack, FormLabel, Input, Box, Select, useToast
+    Stack, FormLabel, Input, Box, useToast
   } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons';
 import React, { useRef } from 'react';
@@ -17,7 +17,7 @@ import React, { useRef } from 'react';
 import { db } from '../firebase/firebaseConfig';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-function EditTask({ id, color }) {
+function AddTask({ id, color }) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const taskRef = useRef();
@@ -100,4 +100,4 @@ function EditTask({ id, color }) {
     )
 }
 
-export default EditTask;
+export default AddTask;
