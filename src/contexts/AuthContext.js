@@ -9,13 +9,19 @@ import {
     updateEmail,
     updatePassword,
     GoogleAuthProvider,
-    signInWithPopup 
+    signInWithPopup,
+    OAuthProvider,
+    FacebookAuthProvider,
+    GithubAuthProvider
 } from 'firebase/auth';
 
 
 const AuthContext = React.createContext();
 
 const googleProvider = new GoogleAuthProvider();
+const microsoftProvider = new OAuthProvider('microsoft.com');
+const facebookProvider = new FacebookAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 export const useAuth = () => {
     return useContext(AuthContext);
@@ -46,6 +52,15 @@ export function AuthProvider({ children }) {
     const signInWithGoogle = () => {
         return signInWithPopup(auth, googleProvider);
     }
+    const signInWithMicrosoft = () => {
+        return signInWithPopup(auth, microsoftProvider);
+    }
+    const signInWithFacebook = () => {
+        return signInWithPopup(auth, facebookProvider);
+    }
+    const signInWithGithub = () => {
+        return signInWithPopup(auth, githubProvider);
+    }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -63,7 +78,10 @@ export function AuthProvider({ children }) {
         resetPass,
         updateEm,
         updatePass,
-        signInWithGoogle
+        signInWithGoogle,
+        signInWithMicrosoft,
+        signInWithFacebook,
+        signInWithGithub
     }
 
 
