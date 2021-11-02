@@ -2,6 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 
+const dotenv = require('dotenv');
+const path = require('path');
+
+dotenv.config({
+  path: path.resolve(__dirname, process.env.NODE_ENV + '.env')
+});
+
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_TASKING_FB_API_KEY,
   authDomain: process.env.REACT_APP_TASKING_FB_AUTH_DOMAIN,
@@ -10,6 +18,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_TASKING_FB_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_TASKING_FB_APP_ID
 };
+
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
