@@ -1,25 +1,31 @@
-import { Text, IconButton, Flex, Button } from '@chakra-ui/react';
-import { FaCheckSquare, FaRegSquare } from 'react-icons/fa'
+import { Text, IconButton, Flex, useColorModeValue, Box } from '@chakra-ui/react';
+import { FaCheckSquare, FaRegSquare, FaTimes } from 'react-icons/fa'
 
-import OptionsMenu from './OptionsMenu';
+// import OptionsMenu from './OptionsMenu';
 
 function TaskItem({ task, toggleComplete, deleteValue }) {
 
+    const bgcolor = useColorModeValue('gray.200', 'gray.700');
+
     return(
-        <Button as="flex" flexDirection="row" justifyContent="space-between" alignItems="center"  cursor="default"  borderRadius="10"  >
-            <Flex alignItems="center" >
+        <Flex bgColor={bgcolor} flexDirection="row" maxW="100%" justifyContent="space-between" alignItems="center"  cursor="default"  borderRadius="5">
+            <Flex alignItems="center">
                 <IconButton 
                     icon={task.completed ? <FaCheckSquare /> : <FaRegSquare />} 
                     onClick={() => toggleComplete(task)} 
                     bgColor="transparent" 
                     _focus={{border: 'none'}} 
+                    borderRadius="30"
                      
                 />
-                <Text fontSize="lg"  ml="5" fontWeight="semibold" >{task.name}</Text>
+                <Flex>
+                    <Text maxWidth="200px" flexWrap="wrap" py="1" fontSize="lg" ml="5" fontWeight="semibold"  >{task.name}</Text>
+                </Flex>
             </Flex>
-            <OptionsMenu deleteValue={deleteValue} task={task} />
+            <IconButton icon={ <FaTimes /> } onClick={() => deleteValue(task)} borderRadius="30" bgColor="transparent" />
+            {/* <OptionsMenu deleteValue={deleteValue} task={task} /> */}
             {/* <IconButton icon={ <FaEllipsisH /> }  bgColor="transparent" _focus={{border: 'none'}} _hover={{bgColor: `${prColor(item.priority)}.300`}} _active={{bgColor: `${prColor(item.priority)}.500`}} borderRadius="20" /> */}
-        </Button>
+        </Flex>
     )
 }
 

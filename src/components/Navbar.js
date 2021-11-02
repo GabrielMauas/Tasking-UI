@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Stack, IconButton, useColorMode } from '@chakra-ui/react';
 import { SunIcon, MoonIcon } from '@chakra-ui/icons';
-import { FaThLarge, FaUserAlt } from 'react-icons/fa';
+import { FaGripHorizontal, FaUserAlt } from 'react-icons/fa';
 import { HiOutlineLogout } from 'react-icons/hi';
 
 import { useAuth } from '../contexts/AuthContext';
@@ -31,7 +31,7 @@ function Navbar() {
             <Stack zIndex={2} spacing={0} position="fixed" bottom="0" height={["8vh", '10vh', "100vh"]} p="5" bgColor="gray.900" minW={["100vw",'100vw' ,"5%"]} maxW={["100vw",'100vw' ,"10%"]} boxShadow="dark-lg" display="flex" justifyContent={["space-around", "space-around", "space-evenly"]} alignItems="center" flexDirection={["row", "row", "column"]} >
                 <IconButton icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon /> } size="lg" bgColor="transparent" p="4" color="white" _hover={{ bg: "gray.700" }} _active={{ transform: "scale(0.96)" }} _focus={{ border: 'none' }} rounded="10px" onClick={toggleColorMode} />
                 <Link to="/">
-                    <IconButton  icon={ <FaThLarge /> }  size="lg" bgColor="transparent" p="4" color="white" _hover={{ bg: 'gray.700' }} _active={{ transform: "scale(0.96)" }} _focus={{ border: 'none' }} rounded="10px" />
+                    <IconButton  icon={ <FaGripHorizontal /> }  size="lg" bgColor="transparent" p="4" color="white" _hover={{ bg: 'gray.700' }} _active={{ transform: "scale(0.96)" }} _focus={{ border: 'none' }} rounded="10px" />
                 </Link>
 
                 { currentUser && (          

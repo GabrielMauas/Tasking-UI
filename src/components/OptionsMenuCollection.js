@@ -20,7 +20,7 @@ function OptionsMenuCollection({ deleteValue }) {
             <MenuButton as={IconButton} icon={ <FaEllipsisV /> } bgColor="" colorScheme="gray" border="2px gray.200" >
             </MenuButton>
             <MenuList color={fontColor}>
-                <MenuItem>Edit</MenuItem>
+                {/* <MenuItem>Edit</MenuItem> */}
                 <MenuItem onClick={() => deleteValue()}>Delete</MenuItem>
             </MenuList>
         </Menu>

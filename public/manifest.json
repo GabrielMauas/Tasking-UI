@@ -1,7 +1,14 @@
 {
-    "name": "Tasking",
-    "short_name": "Tasking",
+    "name": "Tasking App",
+    "short-name": "Tasking",
+    "descrpition": "Aplicación para registrar tareas.",
     "dir": "ltr",
+    "lang": "es",
     "display": "fullscreen",
-    "start_url": "/collections"
+    "background_color": "#1a222f",
+    "theme_color": "#1a222f",
+    "start_url": "/",
+    "categories": [
+        "productivity"
+    ]
 }
