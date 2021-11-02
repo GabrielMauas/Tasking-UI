@@ -22,7 +22,8 @@ const firebaseApp = initializeApp({
 
 
 
-console.log(isProduction());
+// console.log(isProduction());
+
 // Initialize Firebase
 // const firebaseApp = initializeApp(firebaseConfig);
 export const db = getFirestore(firebaseApp);
