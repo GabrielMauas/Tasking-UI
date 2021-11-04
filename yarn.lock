@@ -2218,6 +2218,11 @@
   "resolved" "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.6.0.tgz"
   "version" "0.6.0"
 
+"@fontsource/inter@^4.5.0":
+  "integrity" "sha512-2efK8Ru0LkuOYrEpiHPlV02YkTdIKGbezlxVNeA8/3c+tNt7P2aQPuiYYkVy7N4GA5LWSUVcLL/91MpCIjinOw=="
+  "resolved" "https://registry.npmjs.org/@fontsource/inter/-/inter-4.5.0.tgz"
+  "version" "4.5.0"
+
 "@grpc/grpc-js@^1.3.2":
   "integrity" "sha512-/chkA48TdAvATHA7RXJPeHQLdfFhpu51974s8htjO/XTDHA41j5+SkR5Io+lr9XsLmkZD6HxLyRAFGmA9wjO2w=="
   "resolved" "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.4.1.tgz"
