@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { getColl, getUncompletedTasks, getCompletedTasks, toggleComplete, deleteTask, deleteFolder } from '../firebase/api';
 
 import TaskItem from './TaskItem';
-import AddTask from './AddTask';
 import Addtask2 from './Addtask2';
 import Loading from './Loading';
 import OptionsMenuCollection from './OptionsMenuCollection';
