@@ -3,6 +3,7 @@ import { Heading, Stack, Input, Button, Text, Alert, AlertIcon, Box } from '@cha
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { FaFacebook, FaGithub, FaGoogle, FaMicrosoft } from 'react-icons/fa';
+import { sendEmailVerification } from '@firebase/auth';
 
 const SignUp = () => {
     const emailRef = useRef();
@@ -13,7 +14,7 @@ const SignUp = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const { signUp, signInWithGoogle, signInWithMicrosoft, signInWithFacebook, signInWithGithub } = useAuth();
+    const { signUp, signInWithGoogle, signInWithMicrosoft, signInWithFacebook, signInWithGithub, currentUser } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -90,15 +91,18 @@ const SignUp = () => {
     return (
         <Box my="20">
             <Heading textAlign="center" p="5">Sign Up</Heading>
+
             <Stack as="form" spacing={3} m="5" mx="auto" w={["85%", "80%", "40%"]} onSubmit={handleSubmit}>
+                <Stack spacing={5} direction={["column", "column", "row"]} align="center">
+                    <Button disabled={loading} w="100%" colorScheme="blue" variant="outline" p="5" rightIcon={ <FaGoogle /> } onClick={handleGoogle} >Access with Google</Button>
+                    {/* <Button disabled={loading} w="100%" colorScheme="orange" variant="outline" rightIcon={ <FaMicrosoft /> } onClick={handleMicrosoft} >Access with Microsoft</Button>                             */}
+                </Stack>
+                <Text textAlign="center" color="gray.500">Or</Text>
                 <Input type="email" required autoComplete='off' variant="outline" placeholder="Email" ref={emailRef} />
                 <Input type="password" required variant="outline" placeholder="Password" ref={passRef} />
                 <Input type="password" required variant="outline" placeholder="Confirm Password" ref={confPassRef} />
                 <Button disabled={loading} type="submit" colorScheme="blue">Sign Up</Button>
-                <Stack spacing={5} direction={["column", "column", "row"]} align="center">
-                    <Button disabled={loading} w="100%" colorScheme="blue" variant="outline" rightIcon={ <FaGoogle /> } onClick={handleGoogle} >Access with Google</Button>
-                    {/* <Button disabled={loading} w="100%" colorScheme="orange" variant="outline" rightIcon={ <FaMicrosoft /> } onClick={handleMicrosoft} >Access with Microsoft</Button>                             */}
-                </Stack>
+
                 {/* <Stack spacing={5} direction={["column", "column", "row"]} align="center" >
                     <Button w="100%" disabled={loading} colorScheme="facebook" variant="outline" rightIcon={ <FaFacebook /> } onClick={handleFacebook} >Access with Faceboook</Button>
                     <Button w="100%" disabled={loading} colorScheme="black" variant="outline" rightIcon={ <FaGithub /> } onClick={handleGithub} >Access with Github</Button>
