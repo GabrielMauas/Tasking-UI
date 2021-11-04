@@ -12,10 +12,10 @@ import {
     Stack, FormLabel, Input, Box, useToast
   } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
-import { db } from '../firebase/firebaseConfig';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
+import { createTask } from '../firebase/api';
 
 function AddTask({ id, color }) {
 
@@ -23,28 +23,25 @@ function AddTask({ id, color }) {
     const taskRef = useRef();
     // const priorityRef = useRef();
     const toast = useToast();
+    const [name, setName] = useState('');
 
-    const createTask = async () => {
-        const data = {
-            name: taskRef.current.value,
-            // priority: priorityRef.current.value,
-            parentId: id,
-            createdAt: serverTimestamp(),
-            completed: false
-        }
-        await addDoc(collection(db, 'tasks'), data);
-        toast({
-            title: 'Task Created',
-            status: 'success',
-            duration: 2000,
-            isClosable: true
-        });
+    const data = {
+      name,
+      // priority: priorityRef.current.value,
+      parentId: id,
+      createdAt: serverTimestamp(),
+      completed: false
     }
+    const params = {
+      toast
+    }
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        createTask();
+        createTask(params, data);
     }
         return (
           <>
@@ -72,6 +69,7 @@ function AddTask({ id, color }) {
                         id="task"
                         autoComplete={'off'}
                         placeholder="New Task..."
+                        onChange={(e) => setName(e.target.value)}
                       />
                     </Box>
       

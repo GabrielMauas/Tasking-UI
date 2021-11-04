@@ -1,14 +1,23 @@
+import "@fontsource/inter"
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
+
+const theme = extendTheme({
+  fonts: {
+    heading: 'Inter',
+    body: 'Inter'
+  }
+})
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ColorModeScript />
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
           <App />
       </ChakraProvider>
     </BrowserRouter>

@@ -1,28 +1,33 @@
-import { Text, IconButton, Flex, useColorModeValue, Box } from '@chakra-ui/react';
-import { FaCheckSquare, FaRegSquare, FaTimes } from 'react-icons/fa'
+import { Text, IconButton, Flex, useColorModeValue, Box, Stack } from '@chakra-ui/react';
+import { FaCheckSquare, FaTimes } from 'react-icons/fa'
 
 // import OptionsMenu from './OptionsMenu';
 
-function TaskItem({ task, toggleComplete, deleteValue }) {
+function TaskItem({ color, task, toggleComplete, deleteValue, params }) {
 
     const bgcolor = useColorModeValue('gray.200', 'gray.700');
 
     return(
-        <Flex bgColor={bgcolor} flexDirection="row" maxW="100%" justifyContent="space-between" alignItems="center"  cursor="default"  borderRadius="5">
-            <Flex alignItems="center">
+        <Flex bgColor={bgcolor} flexDirection="row" w="100%" justifyContent="space-between" alignItems="center"  cursor="default"  borderRadius="15" py="1" px="3">
+        {/* // <Stack direction="row" bgColor={bgcolor}> */}
+            <Stack alignItems="center" direction="row" py="2" px="1">
                 <IconButton 
-                    icon={task.completed ? <FaCheckSquare /> : <FaRegSquare />} 
+                    icon={task.completed ? <FaCheckSquare /> : null} 
                     onClick={() => toggleComplete(task)} 
-                    bgColor="transparent" 
+                    mx="1"
+                    bgColor={task.completed ? color : null} 
                     _focus={{border: 'none'}} 
-                    borderRadius="30"
+                    borderRadius="10"
+                    borderWidth="3px"
+                    borderColor={color}
+                    size="xs"
                      
                 />
-                <Flex>
-                    <Text maxWidth="200px" flexWrap="wrap" py="1" fontSize="lg" ml="5" fontWeight="semibold"  >{task.name}</Text>
-                </Flex>
-            </Flex>
-            <IconButton icon={ <FaTimes /> } onClick={() => deleteValue(task)} borderRadius="30" bgColor="transparent" />
+                <Box>
+                    <Text as={task.completed ? "s" : "p"} ml="1" maxW={["170px", "200px", "400px"]} flexWrap="wrap" py="1" fontSize="lg" isTruncated fontWeight="semi-bold" >{task.name}</Text>
+                </Box>
+            </Stack>
+            <IconButton borderRadius="8" size="sm" icon={ <FaTimes /> } onClick={() => deleteValue(task, params)} bgColor="transparent" />
             {/* <OptionsMenu deleteValue={deleteValue} task={task} /> */}
             {/* <IconButton icon={ <FaEllipsisH /> }  bgColor="transparent" _focus={{border: 'none'}} _hover={{bgColor: `${prColor(item.priority)}.300`}} _active={{bgColor: `${prColor(item.priority)}.500`}} borderRadius="20" /> */}
         </Flex>

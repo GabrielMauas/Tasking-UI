@@ -8,16 +8,16 @@ import {
     ModalCloseButton,
     useDisclosure,
     Button,
-    IconButton,
-    Stack, FormLabel, Input, Box, useToast, useRadioGroup, Grid
+    Stack, FormLabel, Input, Box, useToast, useRadioGroup, Grid, useColorModeValue
   } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons';
 import React, { useRef, useState } from 'react';
 
-import { foldersRef } from '../firebase/firebaseConfig';
-import { addDoc, serverTimestamp } from 'firebase/firestore';
+// import { foldersRef } from '../firebase/firebaseConfig';
+import { serverTimestamp } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
 import RadioCard from './CustomRadioButton';
+import { createCollection } from '../firebase/api';
 
 
 function AddCollection() {
@@ -32,56 +32,60 @@ function AddCollection() {
 		"#9E7F72"
 	];
     const [collectionColor, setCollectionColor] = useState("#FC76A1");
-    const { getRootProps, getRadioProps } = useRadioGroup({
+    const { getRadioProps } = useRadioGroup({
 		name: "collection-color",
 		defaultValue: "#FC76A1",
 		onChange: setCollectionColor
 	});
-
+    const [name, setName] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure();
     const nameRef = useRef();
     const { currentUser } = useAuth();
     const toast = useToast();
 
-    const createFolder = async () => {
-        const data = {
-            name: nameRef.current.value,
-            ownerId: currentUser.uid,
-            createdAt: serverTimestamp(),
-            collectionColor
-        }
-        await addDoc(foldersRef, data);
-        toast({
-            title: 'Collection Created',
-            status: 'success',
-            duration: 2000,
-            isClosable: true
-        });
+    const params = {
+        currentUser,
+        toast
+    }
+    const data = {
+        name,
+        ownerId: currentUser.uid,
+        createdAt: serverTimestamp(),
+        collectionColor
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        createFolder();
+        createCollection(params, data);
     }
+    const bordercolor = useColorModeValue('gray.300', 'gray.600');
+
     
     return (
         <>
-            <IconButton 
+            <Button 
                 icon={ <AddIcon /> } 
-                colorScheme="blue" 
                 onClick={onOpen}  
-                borderRadius="10" 
-                border="2px gray.200" 
-                size="lg" 
+                borderRadius="12"
+                borderWidth="2px"
+                borderColor={bordercolor}
+                py="7"
+                fontSize="md"
+                leftIcon={ <AddIcon /> }
+                _hover={{transform: "scale(0.98)"}}
+                _active={{transform: "scale(0.96)"}}
+                _focus={{borderColor: 'none'}}
             >
-            </IconButton>
+                Add Collection
+            </Button>
             <Modal
                 initialFocusRef={nameRef}
                 isOpen={isOpen}
                 placement="right"
                 onClose={onClose}
                 size="sm"
+                motionPreset="slideInRight"
             >
                 <ModalOverlay />
                 <ModalContent onSubmit={handleSubmit}>
@@ -100,6 +104,7 @@ function AddCollection() {
                                     ref={nameRef}
                                     autoComplete={'off'}
                                     placeholder="New Collection..."
+                                    onChange={(e) => setName(e.target.value)}
                                 />
                                 <FormLabel my="5">Color</FormLabel>
                                 <Grid templateColumns="repeat(4, 1fr)" gap="3">

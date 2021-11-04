@@ -9,11 +9,9 @@ import {
 import { FaEllipsisV } from 'react-icons/fa';
 
 
-function OptionsMenuCollection({ deleteValue }) {
+function OptionsMenuCollection({ deleteValue, params }) {
 
     const fontColor = useColorModeValue('gray.800', 'gray.200');
-
-
 
     return(
         <Menu>
@@ -21,7 +19,7 @@ function OptionsMenuCollection({ deleteValue }) {
             </MenuButton>
             <MenuList color={fontColor}>
                 {/* <MenuItem>Edit</MenuItem> */}
-                <MenuItem onClick={() => deleteValue()}>Delete</MenuItem>
+                <MenuItem onClick={() => deleteValue(params)}>Delete</MenuItem>
             </MenuList>
         </Menu>
     )
