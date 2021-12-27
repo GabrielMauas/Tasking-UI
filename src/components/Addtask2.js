@@ -4,7 +4,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { useRef, useState } from 'react';
 
 import { serverTimestamp } from 'firebase/firestore';
-import { createTask } from '../firebase/api';
+import { createTask, capitalize } from '../firebase/api';
 
 function Addtask2({ id, color }) {
 
@@ -17,7 +17,7 @@ function Addtask2({ id, color }) {
     const [name, setName] = useState('');
 
     const data = {
-      name: name,
+      name: capitalize(name),
       // priority: priorityRef.current.value,
       parentId: id,
       createdAt: serverTimestamp(),
@@ -26,8 +26,6 @@ function Addtask2({ id, color }) {
     const params = {
       toast
     }
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();

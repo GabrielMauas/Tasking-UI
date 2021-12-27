@@ -111,3 +111,7 @@ export const createTask = async (params, data) => {
     await addDoc(collection(db, 'tasks'), data);
 }
 
+export const capitalize = (string) => {
+    return string.charAt().toUpperCase() + string.slice(1);
+}
+

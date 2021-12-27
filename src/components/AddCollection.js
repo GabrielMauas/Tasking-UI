@@ -17,8 +17,7 @@ import React, { useRef, useState } from 'react';
 import { serverTimestamp } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
 import RadioCard from './CustomRadioButton';
-import { createCollection } from '../firebase/api';
-
+import { createCollection, capitalize } from '../firebase/api';
 
 function AddCollection() {
 
@@ -48,7 +47,7 @@ function AddCollection() {
         toast
     }
     const data = {
-        name,
+        name: capitalize(name),
         ownerId: currentUser.uid,
         createdAt: serverTimestamp(),
         collectionColor
